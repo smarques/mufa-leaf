@@ -1,0 +1,626 @@
+/* Base Styles -------------------- */
+
+html,
+body {
+    height: 100%;
+}
+
+#main-map {
+    min-height: 599px;
+}
+
+$ncirc: 2;
+$color: #77cfee;
+$circleColor: #ebb267;
+$nucleoArtisticoColor: #3aa8d9;
+$industrieCreativeColor: #d7422e;
+$settoriComplementariColor: #74b326;
+$industrieCulturaliColor: #f6972f;
+$interfaceGreyColor: #676259;
+$interfaceDarkColor: #1c4758;
+#loader-wrapper .loader-section {
+    position: fixed;
+    top: 0;
+    width: 51%;
+    height: 100%;
+    z-index: 9000;
+}
+
+#loader-wrapper .loader-section.section-left {
+    background: linear-gradient(90deg, darken($color, 15%), darken($color, 8%));
+    left: 0;
+}
+
+#loader-wrapper .loader-section.section-right {
+    right: 0;
+    background: linear-gradient(90deg, darken($color, 8%), darken($color, 15%));
+}
+
+.loaded #loader-wrapper .loader-section.section-right,
+.loaded #loader-wrapper .loader-section.section-left {
+    -webkit-transition: all 1s 0.3s ease-out;
+    transition: all 1s 0.3s ease-out;
+}
+
+.loaded #loader-wrapper .loader-section.section-left {
+    left: -100%;
+}
+
+.loaded #loader-wrapper .loader-section.section-right {
+    right: -100%;
+}
+
+.loaded #loader .circle {
+    -webkit-transition: all 1s 0.3s ease-out;
+    transition: all 1s 0.3s ease-out;
+    opacity: 0;
+}
+
+.loaded #loader {
+    left: -100%;
+    transition-delay: 1.3s;
+    transition-duration: 0.1s;
+}
+
+.loaded #facade {
+    display: none;
+}
+
+#loader {
+    z-index: 9002;
+    width: 100px;
+    height: 102px;
+    border-radius: 100%;
+    position: absolute;
+    top: 45%;
+    left: calc(50% - 50px);
+    .circle {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        .inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            border: 5px solid transparentize($circleColor, 0.3);
+            border-right: none;
+            border-top: none;
+            background-clip: padding;
+            box-shadow: inset 0px 0px 10px transparentize($circleColor, 0.85);
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@for $i from 0 through $ncirc {
+    .circle:nth-of-type(#{$i}) {
+        transform: rotate($i * 70deg);
+        .inner {
+            animation: spin 2s infinite linear
+        }
+    }
+}
+
+#loader {
+    animation: spin 5s infinite linear
+}
+
+#facade {
+    position: absolute;
+    //margin-right: 171px;
+    //text-align: justify;
+    padding: 20px;
+    color: white;
+    opacity: 0.5;
+    z-index: 9001;
+}
+
+#loading-msg {
+    color: $circleColor;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: white;
+    size: 20px;
+    z-index: 9001;
+    &::after,
+    &::before {
+        content: "...";
+    }
+}
+
+
+/*************/
+
+
+/** markers **/
+
+$cluster-nucleo_artistico: #36a6d8;
+$cluster-settori_complementari: #71af25;
+$cluster-industrie_creative: #d63e2a;
+$cluster-industrie_culturali: #f6972f;
+$cluster-border-alpha:.2;
+$cluster-low-perc: 30%;
+$cluster-medium-perc: 15%;
+$cluster-large-perc: 1%;
+.nucleo_artistico.marker-cluster-small {
+    background-color: $cluster-nucleo_artistico;
+    div {
+        background-color: lighten($cluster-nucleo_artistico, $cluster-low-perc);
+    }
+}
+
+.nucleo_artistico.marker-cluster-medium {
+    background-color: $cluster-nucleo_artistico;
+    div {
+        background-color: lighten($cluster-nucleo_artistico, $cluster-medium-perc);
+    }
+}
+
+.nucleo_artistico.marker-cluster-large {
+    background-color: $cluster-nucleo_artistico;
+    div {
+        background-color: lighten($cluster-nucleo_artistico, $cluster-large-perc);
+        width: 50px;
+        height: 50px;
+        margin-top: -5px;
+        margin-left: -5px;
+        padding-top: 10px;
+        text-align: center;
+        border-radius: 34px;
+        border: 1px solid white;
+    }
+}
+
+.settori_complementari.marker-cluster-small {
+    background-color: $cluster-settori_complementari;
+    div {
+        background-color: lighten($cluster-settori_complementari, $cluster-low-perc);
+    }
+}
+
+.settori_complementari.marker-cluster-medium {
+    background-color: $cluster-settori_complementari;
+    div {
+        background-color: lighten($cluster-settori_complementari, $cluster-medium-perc);
+    }
+}
+
+.settori_complementari.marker-cluster-large {
+    background-color: $cluster-settori_complementari;
+    div {
+        background-color: lighten($cluster-settori_complementari, $cluster-large-perc);
+        width: 50px;
+        height: 50px;
+        margin-top: -5px;
+        margin-left: -5px;
+        padding-top: 10px;
+        text-align: center;
+        border-radius: 34px;
+        border: 1px solid white;
+    }
+}
+
+.industrie_creative.marker-cluster-small {
+    background-color: $cluster-industrie_creative;
+    div {
+        background-color: lighten($cluster-industrie_creative, $cluster-low-perc);
+    }
+}
+
+.industrie_creative.marker-cluster-medium {
+    background-color: $cluster-industrie_creative;
+    div {
+        background-color: lighten($cluster-industrie_creative, $cluster-medium-perc);
+    }
+}
+
+.industrie_creative.marker-cluster-large {
+    background-color: lighten($cluster-industrie_creative, 20%);
+    color: white;
+    div {
+        background-color: lighten($cluster-industrie_creative, $cluster-large-perc);
+        width: 50px;
+        height: 50px;
+        margin-top: -5px;
+        margin-left: -5px;
+        padding-top: 10px;
+        text-align: center;
+        border-radius: 34px;
+        border: 1px solid white;
+    }
+}
+
+.industrie_culturali.marker-cluster-small {
+    background-color: $cluster-industrie_culturali;
+    div {
+        background-color: lighten($cluster-industrie_culturali, $cluster-low-perc);
+    }
+}
+
+.industrie_culturali.marker-cluster-medium {
+    background-color: $cluster-industrie_culturali;
+    div {
+        background-color: lighten($cluster-industrie_culturali, $cluster-medium-perc);
+    }
+}
+
+.industrie_culturali.marker-cluster-large {
+    background-color: red;
+    color: white;
+    margin-left: 5px;
+    margin-top: 5px;
+    div {
+        background-color: lighten($cluster-industrie_culturali, $cluster-large-perc);
+        width: 50px;
+        height: 50px;
+        padding-top: 10px;
+        margin-top: -5px;
+        margin-left: -5px;
+        text-align: center;
+        border-radius: 34px;
+        border: 1px solid white;
+    }
+}
+
+
+/*************
+    ** CONTROLS **
+    *************/
+
+#main-map {
+    #attivita-selector {
+        margin-top: 30px;
+        a {
+            &.badge {
+                background-color: #80808052;
+            }
+            &.badge-success {
+                background-color: green;
+            }
+            margin: 3px 4px;
+            font-size: 1rem;
+            color: white;
+            /* text-transform: lowercase; */
+            padding: 3px 5px;
+        }
+    }
+    .leaflet-control-attribution {
+        display: none;
+    }
+    div.leaflet-bottom.leaflet-left {
+        width: 100%;
+        background-color: white;
+    }
+    .leaflet-sidebar-right .leaflet-sidebar-content {
+        background-color: #fbfafaeb;
+    }
+    #timeline-container {
+        .irs--modern .irs-min,
+        .irs--modern .irs-max {
+            color: black;
+            font-size: 12px;
+        }
+        .irs--modern .irs-from,
+        .irs--modern .irs-to,
+        .irs--modern .irs-single {
+            font-size: 12px;
+            background-color: $interfaceDarkColor;
+        }
+        .irs-bar {
+            background: $interfaceDarkColor;
+            background: linear-gradient(to bottom, $interfaceDarkColor 0%, #18891d 100%);
+        }
+    }
+    .leaflet-sidebar {
+        margin-bottom: 100px;
+        font-size: 16px;
+    }
+    .leaflet-sidebar-header {
+        background-color: #a9a294f7;
+    }
+    .leaflet-sidebar-pane {
+        min-width: 20px;
+    }
+    .leaflet-sidebar-tabs>li.active,
+    .leaflet-sidebar-tabs>ul>li.active {
+        color: #fff;
+        background-color: $cluster-settori_complementari;
+    }
+    .attivita-settore {
+        .att-labels {
+            a {
+                &.badge {
+                    background-color: #80808052;
+                }
+                // &.badge-success {
+                //     background-color: green;
+                // }
+                margin: 3px 4px;
+                font-size: 1rem;
+                color: white;
+                /* text-transform: lowercase; */
+                padding: 3px 5px;
+            }
+        }
+    }
+    .attivita-settore.att-nucleo_artistico a.badge-success {
+        background-color: $nucleoArtisticoColor;
+        &:focus,
+        &:hover {
+            box-shadow: 0 0 0 0.2rem rgba($nucleoArtisticoColor, 0.2);
+        }
+    }
+    .attivita-settore.att-industrie_creative a.badge-success {
+        background-color: $industrieCreativeColor;
+        &:focus,
+        &:hover {
+            box-shadow: 0 0 0 0.2rem rgba($industrieCreativeColor, 0.2);
+        }
+    }
+    .attivita-settore.att-industrie_culturali a.badge-success {
+        background-color: $industrieCulturaliColor;
+        &:focus,
+        &:hover {
+            box-shadow: 0 0 0 0.2rem rgba($industrieCulturaliColor, 0.2);
+        }
+    }
+    .attivita-settore.att-settori_complementari a.badge-success {
+        background-color: $settoriComplementariColor;
+        &:focus,
+        &:hover {
+            box-shadow: 0 0 0 0.2rem rgba($settoriComplementariColor, 0.2);
+        }
+    }
+    #cluster-att-control {
+        margin-top: 20px;
+        .cluster-att-control-block {
+            background-color: #8e8e8e14;
+            margin-bottom: 20px;
+            a.layer-option {
+                +div {
+                    //display: none;
+                    opacity: 0;
+                    padding: 0;
+                    transition: opacity 0.5s, height 5s, padding 0.5s linear;
+                    height: 0;
+                }
+                padding: 10px 5px;
+                background-color: #80808038;
+                cursor: pointer;
+                display: flex;
+                border-bottom: 1px dashed $interfaceGreyColor;
+                padding: 3px 6px;
+                // margin-bottom: 10px;
+                div.label {
+                    margin-left: 10px;
+                }
+                div.switch {
+                    position: relative;
+                    top: 5px;
+                    span {
+                        width: 24px;
+                        height: 14px;
+                        border-radius: 7px;
+                        transition: all .3s ease;
+                        display: block;
+                        position: relative;
+                        background: rgba($interfaceGreyColor, .8);
+                        box-shadow: 0 8px 16px -1px rgba($interfaceGreyColor, .2);
+                        &:before,
+                        &:after {
+                            content: '';
+                            display: block;
+                            position: absolute;
+                            transition: all .3s ease;
+                        }
+                        &:before {
+                            top: 3px;
+                            left: 3px;
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 4px;
+                            border: 1px solid #fff;
+                        }
+                        &:after {
+                            top: 3px;
+                            left: 16px;
+                            width: 2px;
+                            height: 8px;
+                            border-radius: 40%;
+                            transform-origin: 50% 50%;
+                            background: #fff;
+                            opacity: 0;
+                        }
+                        &:active {
+                            transform: scale(.92);
+                        }
+                    }
+                }
+                &.active {
+                    &+div {
+                        padding: 20px 8px 20px;
+                        height: inherit;
+                        // display: block;
+                        transition: opacity 0.5s, height 5s, padding 0.5s linear;
+                        opacity: 1;
+                    }
+                    div.switch {
+                        span {
+                            background: $interfaceDarkColor;
+                            &.nucleo_artistico {
+                                background: $nucleoArtisticoColor;
+                                box-shadow: 0 8px 16px -1px rgba($nucleoArtisticoColor, .2);
+                            }
+                            &.industrie_creative {
+                                background: $industrieCreativeColor;
+                                box-shadow: 0 8px 16px -1px rgba($industrieCreativeColor, .2);
+                            }
+                            &.industrie_culturali {
+                                background: $industrieCulturaliColor;
+                                box-shadow: 0 8px 16px -1px rgba($industrieCulturaliColor, .2);
+                            }
+                            &.settori_complementari {
+                                background: $settoriComplementariColor;
+                                box-shadow: 0 8px 16px -1px rgba($settoriComplementariColor, .2);
+                            }
+                            &:before {
+                                width: 0px;
+                                border-radius: 3px;
+                                margin-left: 13px;
+                                border-width: 1px;
+                                background: #fff;
+                            }
+                            &:after {
+                                animation: .35s linear forwards .2s;
+                            }
+                        }
+                    }
+                }
+            }
+            .attivita-settore {
+                // padding: 20px 8px 20px;
+            }
+        }
+    }
+    .control-prov.layers_control,
+    .control-fonti.layers_control {
+        margin-top: 25px;
+        //display: flex;
+        justify-content: space-between;
+        a.layer-option {
+            cursor: pointer;
+            display: flex;
+            border-bottom: 1px dashed $interfaceGreyColor;
+            padding: 3px 6px;
+            margin-bottom: 5px;
+            div.label {
+                margin-left: 10px;
+            }
+            div.switch {
+                position: relative;
+                top: 5px;
+                span {
+                    width: 24px;
+                    height: 14px;
+                    border-radius: 7px;
+                    transition: all .3s ease;
+                    display: block;
+                    position: relative;
+                    background: rgba($interfaceGreyColor, .8);
+                    box-shadow: 0 8px 16px -1px rgba($interfaceGreyColor, .2);
+                    &:before,
+                    &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        transition: all .3s ease;
+                    }
+                    &:before {
+                        top: 3px;
+                        left: 3px;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 4px;
+                        border: 1px solid #fff;
+                    }
+                    &:after {
+                        top: 3px;
+                        left: 16px;
+                        width: 2px;
+                        height: 8px;
+                        border-radius: 40%;
+                        transform-origin: 50% 50%;
+                        background: #fff;
+                        opacity: 0;
+                    }
+                    &:active {
+                        transform: scale(.92);
+                    }
+                }
+            }
+            &.active {
+                div.switch {
+                    span {
+                        background: $interfaceDarkColor;
+                        &.nucleo_artistico {
+                            background: $nucleoArtisticoColor;
+                            box-shadow: 0 8px 16px -1px rgba($nucleoArtisticoColor, .2);
+                        }
+                        &.industrie_creative {
+                            background: $industrieCreativeColor;
+                            box-shadow: 0 8px 16px -1px rgba($industrieCreativeColor, .2);
+                        }
+                        &.industrie_culturali {
+                            background: $industrieCulturaliColor;
+                            box-shadow: 0 8px 16px -1px rgba($industrieCulturaliColor, .2);
+                        }
+                        &.settori_complementari {
+                            background: $settoriComplementariColor;
+                            box-shadow: 0 8px 16px -1px rgba($settoriComplementariColor, .2);
+                        }
+                        &:before {
+                            width: 0px;
+                            border-radius: 3px;
+                            margin-left: 13px;
+                            border-width: 1px;
+                            background: #fff;
+                        }
+                        &:after {
+                            animation: .35s linear forwards .2s;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #sidebar {
+        height: 250px;
+        transition: all 1s ease-out;
+        .control-stats {
+            margin-top: 25px;
+            .value {
+                font-weight: bold;
+            }
+        }
+    }
+    #sidebar.dyn-cluster-panel {
+        width: 850px;
+        max-width: 100%;
+        height: 100%;
+        @include media-breakpoint-up(md) {
+            height: 605px;
+        }
+    }
+    #sidebar.dyn-prov-panel,
+    #sidebar.dyn-fonti-panel {
+        width: 620px;
+        height: 320px;
+        max-width: 100%;
+    }
+    #sidebar.dyn-attivita-panel {
+        height: 500px;
+        max-width: 100%;
+        width: 800px;
+    }
+    #sidebar.dyn-stats-panel {
+        height: 220px;
+        background-color: #e6e1e1;
+    }
+    #sidebar.dyn-graph-panel {
+        height: 700px;
+        max-width: 100%;
+        width: 800px;
+    }
+    #graph {
+        height: 600px;
+    }
+}
