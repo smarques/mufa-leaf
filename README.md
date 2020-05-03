@@ -10,6 +10,10 @@ An experiment in enabling application level data filtering and reactive update o
 - Filter by time interval
 - Display TreeMap data structure analysis
 
+Code is VERY FAR from being polished and perfect, please feel encouraged to make it better and drop a PR.
+
+Demo: https://smarques.github.io/mufa-leaf/
+
 
 Uses (thanks to all these amazing projects):
 
