@@ -21,21 +21,20 @@
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <!-- <script src="assets/vendor/leaflet/leaflet.min.js"></script> -->
     <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
 
-    <script src='assets/vendor/leaflet.awesome-markers/leaflet.awesome-markers.js'></script>
+
     <script src="https://kit.fontawesome.com/2a76c2824e.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
-    <script src="Leaflet.Control.Custom.js"></script>
-    <script src="leaflet.print.js"></script>
+
     <link rel="stylesheet" href="leaflet-sidebar.min.css" />
-    <script src="leaflet-sidebar.min.js"></script>
-    <script src="leaflet-providers.js"></script>
+
     <script src="veneto.js"></script>
 
 
@@ -52,8 +51,6 @@
     <script src="https://www.amcharts.com/lib/4/core.js"></script>
     <script src="https://www.amcharts.com/lib/4/charts.js"></script>
     <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-    <script src="tinycolor-min.js"></script>
-
 </head>
 
 <body class="bg-dark busy">
@@ -180,8 +177,11 @@
     </div>
     <div class="control-stats-holder" style="display:none">
         <div class="control-stats">
-            <div class="stat">Totale elementi: <span class="recordCount value"></span></div>
-            <div class="stat">Registrazioni dall'anno: <span class="minYear value"></span> all'anno: <span class="maxYear value"></span></div>
+            <p>
+                Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>.
+                <br> Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>
+                <br> Imagery © <a href="https://www.mapbox.com/">Mapbox</a>
+            </p>
         </div>
     </div>
 
@@ -190,8 +190,8 @@
     <!-- endbuild -->
     <script src="app.js"></script>
     <!-- slider -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 
 
 </body>

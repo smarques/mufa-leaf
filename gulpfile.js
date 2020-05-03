@@ -14,10 +14,14 @@ var gulp = require('gulp'),
 
 gulp.task("concatScripts", function() {
     return gulp.src([
+            //  'assets/vendor/leaflet/leaflet.min.js',
             'assets/js/vendor/jquery-3.3.1.slim.min.js',
             'assets/js/vendor/popper.min.js',
             'assets/js/vendor/bootstrap.min.js',
-            'assets/js/functions.js'
+            'assets/js/vendor/papaparse.min.js',
+            'assets/js/functions.js',
+
+            'assets/js/leaflet-plugins/*.js'
         ])
         .pipe(maps.init())
         .pipe(concat('main.js'))
@@ -53,6 +57,7 @@ gulp.task("minifyCss", ["compileSass"], function() {
 gulp.task('watchFiles', function() {
     gulp.watch('assets/css/**/*.scss', ['compileSass']);
     gulp.watch('assets/js/*.js', ['concatScripts']);
+    gulp.watch('assets/js/**/*.js', ['concatScripts']);
 })
 
 gulp.task('clean', function() {
@@ -78,11 +83,12 @@ gulp.task("build", ['minifyScripts', 'minifyCss'], function() {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('serve', ['watchFiles'], function() {
+gulp.task('serve', ['watchFiles', 'minifyScripts'], function() {
     browserSync.init({
         server: "./"
     });
 
+    gulp.watch("gulpfile.js", ['minifyScripts']);
     gulp.watch("assets/css/**/*.scss", ['watchFiles']);
     gulp.watch(['*.html', '*.js']).on('change', browserSync.reload);
 });

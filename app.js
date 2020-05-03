@@ -1,4 +1,3 @@
-const sheetUrl = 'https://docs.google.com/spreadsheets/d/1zI_pCGheI1bJrybo5JBeUdbvOFYbubM8Zg4wjo_xNS0/edit?usp=sharing';
 $(function() {
     let App = {
         debug: false,
@@ -12,15 +11,15 @@ $(function() {
         field_names: {
             inizio_attivita: 'INIZIO ATTIVITA',
             iscrizione: 'ISCRIZIONE',
-            attivita: 'ATTIVITA',
-            settori: 'SETTORI',
-            anno: 'ANNO',
+            attivita: 'PROFESSION',
+            settori: 'SUBSECTOR',
+            anno: 'YEAR',
             lat: 'LAT',
             lng: 'LNG',
             marker: '_marker',
             provincia: 'PRV',
             row_number: 'rownr',
-            fonti: 'FONTE'
+            fonti: 'DS'
         },
         field_values: {
             settori: {
@@ -111,7 +110,8 @@ $(function() {
         config: {
             disableClusteringAtZoom: 14,
             clusterPaneZIndex: 620,
-            maxClusterRadius: 100
+            maxClusterRadius: 100,
+            sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZ3vkQTK-CrT7Rv6Rdu3uDKmumQB94Ic7WrmBu4ezak-72QWbkUISb7FfvR_Z1AhmYgfASVad205BE/pub?output=csv'
         }
 
     };
@@ -172,19 +172,19 @@ $(function() {
             sizeModes: ['A4Portrait', 'A4Landscape']
         }).addTo(App.mainMap);
 
-        // L.control.custom({
-        //         position: 'bottomleft',
-        //         content: '<input type="text" id="year-slider" name="my_range" value="" />',
-        //         classes: '',
-        //         id: 'timeline-container',
-        //         style: {
-        //             cursor: 'pointer',
-        //             width: '90%',
-        //             margin: '10px auto 10px',
-        //             float: 'none'
-        //         }
-        //     })
-        //     .addTo(App.mainMap);
+        L.control.custom({
+                position: 'bottomleft',
+                content: '<input type="text" id="year-slider" name="my_range" value="" />',
+                classes: '',
+                id: 'timeline-container',
+                style: {
+                    cursor: 'pointer',
+                    width: '90%',
+                    margin: '10px auto 10px',
+                    float: 'none'
+                }
+            })
+            .addTo(App.mainMap);
 
         App.sidebar = L.control.sidebar({
             autopan: false, // whether to maintain the centered map point when opening the sidebar
@@ -207,7 +207,7 @@ $(function() {
             id: 'cluster-panel', // UID, used to access the panel
             tab: '<i class="fa fa-layer-group"></i>', // content can be passed as HTML string,
             pane: $('.control-cluster-holder').html(), // DOM elements can be passed, too
-            title: 'Settore e Attività', // an optional pane header
+            title: 'Sectors Aand Activities', // an optional pane header
             position: 'top' // optional vertical alignment, defaults to 'top'
         };
         App.sidebar.addPanel(clusterPanelContent);
@@ -216,7 +216,7 @@ $(function() {
             id: 'prov-panel', // UID, used to access the panel
             tab: '<i class="fa fa-city"></i>', // content can be passed as HTML string,
             pane: $('.control-prov-holder').html(), // DOM elements can be passed, too
-            title: 'Provincia', // an optional pane header
+            title: 'Provinces', // an optional pane header
             position: 'top' // optional vertical alignment, defaults to 'top'
         };
         App.sidebar.addPanel(provPanelContent);
@@ -225,34 +225,25 @@ $(function() {
             id: 'fonti-panel', // UID, used to access the panel
             tab: '<i class="fa fa-database"></i>', // content can be passed as HTML string,
             pane: $('.control-fonti-holder').html(), // DOM elements can be passed, too
-            title: 'Fonti', // an optional pane header
+            title: 'Sources', // an optional pane header
             position: 'top' // optional vertical alignment, defaults to 'top'
         };
         App.sidebar.addPanel(fontiPanelContent);
 
-        // var statsPanelContent = {
-        //     id: 'stats-panel', // UID, used to access the panel
-        //     tab: '<i class="fa fa-info"></i>', // content can be passed as HTML string,
-        //     pane: $('.control-stats-holder').html(), // DOM elements can be passed, too
-        //     title: 'Statistiche', // an optional pane header
-        //     position: 'top' // optional vertical alignment, defaults to 'top'
-        // };
-        // App.sidebar.addPanel(statsPanelContent);
-
-        // var attivitaPanelContent = {
-        //     id: 'attivita-panel', // UID, used to access the panel
-        //     tab: '<i class="fa fa-tasks"></i>', // content can be passed as HTML string,
-        //     pane: '<div id="attivita-selector"></div>', // DOM elements can be passed, too
-        //     title: 'Attività', // an optional pane header
-        //     position: 'top' // optional vertical alignment, defaults to 'top'
-        // };
-        // App.sidebar.addPanel(attivitaPanelContent);
+        var statsPanelContent = {
+            id: 'stats-panel', // UID, used to access the panel
+            tab: '<i class="fa fa-info"></i>', // content can be passed as HTML string,
+            pane: $('.control-stats-holder').html(), // DOM elements can be passed, too
+            title: 'Info', // an optional pane header
+            position: 'top' // optional vertical alignment, defaults to 'top'
+        };
+        App.sidebar.addPanel(statsPanelContent);
 
         var chartPanelContent = {
             id: 'graph-panel', // UID, used to access the panel
             tab: '<i class="fa fa-chart-pie"></i>', // content can be passed as HTML string,
             pane: '<div id="graph"></div>', // DOM elements can be passed, too
-            title: 'Struttura dei dati', // an optional pane header
+            title: 'Data Structure', // an optional pane header
             position: 'top' // optional vertical alignment, defaults to 'top'
         };
         App.sidebar.addPanel(chartPanelContent);
@@ -292,14 +283,14 @@ $(function() {
     function startYearControl() {
         App.filters.statsReady = new Bacon.Bus();
         App.filters.statsReady.first().onValue(stats => {
-            //buildIntervalSelector(stats);
+            buildIntervalSelector(stats);
             initGraphs();
         })
         App.filters.statsReady.onValue(stats => {
-                displayStats(stats);
-                updateGraphs();
-            })
-            //App.filters.year_interval = new Bacon.Bus();
+            displayStats(stats);
+            updateGraphs();
+        })
+        App.filters.year_interval = new Bacon.Bus();
     }
 
     function startProvControl() {
@@ -370,7 +361,7 @@ $(function() {
         startAttivitaControl();
         startYearControl();
         App.filters.all = Bacon.combineTemplate({
-                //  year_interval: App.filters.year_interval.toProperty(null),
+                year_interval: App.filters.year_interval.toProperty(null),
                 province: App.filters.province.changes().toProperty(null),
                 attivita: App.filters.attivita.changes().toProperty(null),
                 settori: App.filters.settori.changes().toProperty(null),
@@ -452,7 +443,7 @@ $(function() {
         chart.dataFields.name = "name";
         chart.dataFields.children = "children";
         chart.dataFields.color = "color";
-        chart.homeText = "Scomposizione per provincia";
+        chart.homeText = "Breakdown by province";
         chart.navigationBar = new am4charts.NavigationBar();
         var level0SeriesTemplate = chart.seriesTemplates.create("0");
         level0SeriesTemplate.strokeWidth = 2;
@@ -518,22 +509,22 @@ $(function() {
 
 
     function buildIntervalSelector(stats) {
-        // App.initialStats = stats;
-        // $("#year-slider").ionRangeSlider({
-        //     type: "double",
-        //     min: stats.minYear,
-        //     max: stats.maxYear,
-        //     from: stats.minYear,
-        //     to: stats.maxYear,
-        //     prettify_enabled: false,
-        //     skin: "modern",
-        //     grid: true,
-        //     grid_num: 10,
-        //     onFinish: function(data) {
-        //         App.filters.year_interval.push([data.from, data.to]);
-        //     }
-        // });
-        // systemFree();
+        App.initialStats = stats;
+        $("#year-slider").ionRangeSlider({
+            type: "double",
+            min: stats.minYear,
+            max: stats.maxYear,
+            from: stats.minYear,
+            to: stats.maxYear,
+            prettify_enabled: false,
+            skin: "modern",
+            grid: true,
+            grid_num: 10,
+            onFinish: function(data) {
+                App.filters.year_interval.push([data.from, data.to]);
+            }
+        });
+        systemFree();
 
     }
 
@@ -619,10 +610,17 @@ $(function() {
 
     function loadData() {
         systemBusy('loading data');
-        Tabletop.init({
-            key: sheetUrl,
-            callback: processData,
-            simpleSheet: true
+        Papa.parse(App.config.sheetUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                if (results.errors.length) {
+                    console.log(results.errors);
+                    alert('Error processing data');
+                }
+
+                processData(results.data);
+            }
         })
     }
 
@@ -654,29 +652,6 @@ $(function() {
                     .replace(/ \/ [0-9]+/, '')
                     .replace(/ [AIP]{1,2}$/, '')
                     .replace(/\.[0-9]+$/, '');
-                // let candAtt = el[App.field_names.attivita]
-                //     .replace("'", '')
-                //     .replace(/ \/ [0-9]+/gm, '')
-                //     .replace(/[ ]+$/g, '')
-                //     .replace(/\.[0-9]+$/gm, '')
-                //     .replace(/\.[0-9]+[ ]*[A]{0,2}$/gm, '')
-                //     .replace(/ [AIP]{1,2}$/gm, '')
-                //     .replace('IT1', 'IT');
-
-                // let pos = candAtt.search(/[./$]+/);
-                // if (pos > 0) {
-                //     candAtt = candAtt.substr(0, pos);
-                // }
-                // pos = candAtt.search(/ [AIP]{1}[ ]*$/);
-                // if (pos > 0) {
-                //     candAtt = candAtt.substr(0, pos);
-                // }
-
-
-                // if (!App.field_values.attivita[candAtt]) {
-                //     console.log('z' + candAtt + 'z');
-                // }
-                // candAtt = candAtt.substr(0, candAtt.indexOf("."));
 
                 if (candAtt.length == 0) {
                     candAtt = 'ALTRO';
@@ -780,8 +755,6 @@ $(function() {
                 }
             });
             App.clusterMarkers[settore].on('clustermouseover', function(a) {
-                // a.layer is actually a cluster
-                //a.layer.setZIndex(999999);
                 floatUpClusterLayer(a.layer.options.pane.substr(5));
             });
         });
@@ -789,11 +762,15 @@ $(function() {
 
     }
 
-    function processData(data, tabletop) {
-
+    function processData(data) {
         buildClusterLayers();
+        log('Received data:');
+
+
         App.data = cleanData(data);
+        log('Cleaned data:');
         log(data);
+
         // loadingMsg('adding markers');
         // for (const row of App.data) {
         //     App.clusterMarkers[getClusterLayerName(row)].addLayer(buildMarkerForElement(row));
@@ -825,9 +802,7 @@ $(function() {
         var setCom = alasql(`SELECT * FROM ? WHERE ${App.field_names.settori} = '${App.field_values.settori.settori_complementari}'`, [App.currentData]);
         var indCr = alasql(`SELECT * FROM ? WHERE ${App.field_names.settori} = '${App.field_values.settori.industrie_creative}'`, [App.currentData]);
         var indCul = alasql(`SELECT * FROM ? WHERE ${App.field_names.settori} = '${App.field_values.settori.industrie_culturali}'`, [App.currentData]);
-        // console.log(indCul);
-        // console.log(setCom);
-        // console.log(indCr);
+
         App.clusterMarkers.nucleo_artistico.clearLayers().addLayers(nuclArt.map(_ => buildMarkerForElement(_)));
         App.clusterMarkers.settori_complementari.clearLayers().addLayers(setCom.map(_ => buildMarkerForElement(_)));
         App.clusterMarkers.industrie_creative.clearLayers().addLayers(indCr.map(_ => buildMarkerForElement(_)));
@@ -841,9 +816,9 @@ $(function() {
 
     function updateCurrentStats() {
         App.currentStats = {};
-        // var res = alasql(`SELECT MIN(${App.field_names.anno}) AS minYear, MAX(${App.field_names.anno}) AS maxYear FROM ? WHERE ${App.field_names.anno} > 1900`, [App.currentData]);
-        // App.currentStats.minYear = res[0].minYear;
-        // App.currentStats.maxYear = res[0].maxYear;
+        var res = alasql(`SELECT MIN(${App.field_names.anno}) AS minYear, MAX(${App.field_names.anno}) AS maxYear FROM ? WHERE ${App.field_names.anno} > 1900`, [App.currentData]);
+        App.currentStats.minYear = res[0].minYear;
+        App.currentStats.maxYear = res[0].maxYear;
         var res = alasql("SELECT COUNT(*) AS tot FROM ? ", [App.currentData]);
         App.currentStats.recordCount = res[0].tot;
         App.filters.statsReady.push(App.currentStats);
@@ -851,11 +826,11 @@ $(function() {
     }
 
     function updateViz(data) {
-        //console.log(data);
+        log(data);
         let conds = [];
-        // if (data.year_interval) {
-        //     conds.push(`( ${App.field_names.anno} >= ${data.year_interval[0]} AND ${App.field_names.anno} <= ${data.year_interval[1]} )`);
-        // }
+        if (data.year_interval) {
+            conds.push(`( ${App.field_names.anno} >= ${data.year_interval[0]} AND ${App.field_names.anno} <= ${data.year_interval[1]} )`);
+        }
         if (data.province) {
             const activeProv = Object.keys(data.province)
                 .filter(_ => data.province[_]);
@@ -903,13 +878,15 @@ $(function() {
 
         }
 
+        log(conds);
+
         let q = 'SELECT * FROM ?';
         if (conds.length) {
             q += ' WHERE ' + conds.join(' AND ');
         }
-        //console.log(q);
+        log(q);
         var res = alasql(q, [App.data]);
-        // console.log(res);
+        log(res);
         updateCurrentData(res);
         redraw();
     }
