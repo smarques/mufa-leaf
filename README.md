@@ -1,5 +1,7 @@
 # MufaLeaf: multi faceted data exploration in the browser
 
+![MufaLeaf Preview](/assets/img/Culture_Viz11.png?raw=true "MufaLeaf Preview")
+
 An experiment in enabling application level data filtering and reactive update of multiple widgets including a Leaflet Map and a amCharts graph.
 
 - Load data from Google Sheets (15k+ records)
