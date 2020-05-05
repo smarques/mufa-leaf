@@ -94,11 +94,11 @@ $(function() {
 
             },
             fonti: {
-                'CC': 'Camera di Commercio',
-                'DOC': 'Cooperative',
-                'ARTEVEN': 'Arteven',
-                'BIBLIOTECHE': 'Rete biblioteche',
-                'MUSEI': 'Rete Musei'
+                'CC': 'Source1',
+                'DOC': 'Source2',
+                'ARTEVEN': 'Another source',
+                'BIBLIOTECHE': 'Source3',
+                'MUSEI': 'Source4'
             }
         },
         filters: {
