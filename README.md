@@ -12,8 +12,8 @@ An experiment in enabling application level data filtering and reactive update o
 
 Code is VERY FAR from being polished and perfect, please feel encouraged to make it better and drop a PR.
 
-Demo: https://smarques.github.io/mufa-leaf/
-
+* Demo: https://smarques.github.io/mufa-leaf/
+* Article: [Towards Data Science](https://towardsdatascience.com/multi-faceted-data-exploration-in-the-browser-using-leaflet-and-amcharts-f74d049d78d9)
 
 Uses (thanks to all these amazing projects):
 
