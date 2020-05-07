@@ -777,9 +777,9 @@ $(function() {
         // }
 
         addMapControls();
-        $('body').addClass('loaded');
+        //$('body').addClass('loaded');
 
-        updateCurrentData(App.data);
+        //updateCurrentData(App.data);
     }
 
     function buildMarkerForElement(row) {
