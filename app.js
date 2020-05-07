@@ -23,10 +23,10 @@ $(function() {
         },
         field_values: {
             settori: {
-                nucleo_artistico: 'NUCLEO ARTISTICO',
-                settori_complementari: 'SETTORI COMPLEMENTARI',
-                industrie_creative: 'INDUSTRIE CREATIVE',
-                industrie_culturali: 'INDUSTRIE CULTURALI'
+                nucleo_artistico: 'TIS',
+                settori_complementari: 'OMP',
+                industrie_creative: ' CR',
+                industrie_culturali: ' CU'
             },
             settori_compact: {
                 nucleo_artistico: 'Nu.Ar.',
@@ -47,50 +47,54 @@ $(function() {
             },
             attivita: {
                 'ALTRO': { icon: 'question' },
-                'ARCHITETTURA': { icon: 'landmark' },
-                'ARREDAMENTO': { icon: 'chair' },
+                'RCRA': { icon: 'landmark' },
+                'RRTO': { icon: 'chair' },
                 'ARTI': { icon: 'palette' },
-                'ARTI VISIVE E LETTERATURA': { icon: 'palette' },
-                'ATTIVITA RICREATIVE': { icon: 'glass' },
-                'BENI CULTURALI': { icon: 'graduation-cap' },
+                'RTRA': { icon: 'palette' },
+                'TTVE': { icon: 'glass' },
+                'ENLI': { icon: 'graduation-cap' },
 
                 'BIBLIOTECHE': { icon: 'book' },
-                'ICT': { icon: 'laptop' },
-                'GAMES': { icon: 'gamepad' },
-                'COMUNICAZIONE': { icon: 'bullhorn' },
+                'CTT': { icon: 'laptop' },
+                'AMES': { icon: 'gamepad' },
+                'OMNE': { icon: 'bullhorn' },
                 'CONSULENZA': { icon: 'briefcase' },
                 'DANZA': { icon: 'street-view' },
-                'DESIGN': { icon: 'pencil' },
+                'ESGN': { icon: 'pencil' },
                 //'DISTRIBUZIONE': { icon: 'project-diagram' },
-                'DISTRIBUZIONE CINEMATOGRAFICA': { icon: 'film' },
-                'EDITORIA': { icon: 'book' },
-                'FOTOGRAFIA': { icon: 'camera' },
-                'GRAFICA': { icon: 'pencil' },
-                'INDUSTRIE CULTURALI': { icon: 'user-graduate' },
+                'OME': { icon: 'film' },
+                'DIIA': { icon: 'book' },
+                'OTIA': { icon: 'camera' },
+                'RACA': { icon: 'pencil' },
+                'USA': { icon: 'user-graduate' },
                 'IT': { icon: 'laptop' },
-                'LIBRERIE': { icon: 'book' },
+                'IBIE': { icon: 'book' },
                 'MODA': { icon: 'tshirt' },
                 'MUSEI': { icon: 'university' },
-                'MUSEI E GALLERIE': { icon: 'university' },
-                'MUSICA': { icon: 'music' },
-                'MUSICA/DANZA/ARTI': { icon: 'music' },
-                'OREFICERIA': { icon: 'ring' },
-                'PRODUZIONE': { icon: 'industry' },
-                'CINEMA': { icon: 'film' },
-                'PROMOZIONE CULTURALE': { icon: 'funnel-dollar' },
-                'RADIO': { icon: 'broadcast-tower' },
-                'SALA CINEMATOGRAFICA': { icon: 'film' },
-                'RESTAURO': { icon: 'hammer' },
-                'SPETTACOLO DAL VIVO': { icon: 'person-booth' },
-                'RICERCA': { icon: 'search' },
-                'SERVIZI': { icon: 'briefcase' },
+                'USIE': { icon: 'university' },
+                'USCA': { icon: 'music' },
+                'OME': { icon: 'music' },
+                'OM': { icon: 'ring' },
+                'DIA': { icon: 'industry' },
+                'INMA': { icon: 'film' },
+                'ROLE': { icon: 'funnel-dollar' },
+                'ADIO': { icon: 'broadcast-tower' },
+                'ESN': { icon: 'film' },
+                'ESRO': { icon: 'hammer' },
+                'IC 6': { icon: 'person-booth' },
+                'IC 7': { icon: 'person-booth' },
+                'INA': { icon: 'search' },
+                'RCA': { icon: 'search' },
+                'IBHE': { icon: 'briefcase' },
                 'SERVIZI PER IL PATRIMONIO': { icon: 'dollar-sign' },
                 //'STUDI': { icon: 'mail-bulk' },
-                'STUDI DI REGISTRAZIONE': { icon: 'microphone-alt' },
-                'TEATRO': { icon: 'theater-masks' },
+                'PEVO': { icon: 'microphone-alt' },
+                'ENI': { icon: 'theater-masks' },
                 'TEATRO/ARTI': { icon: 'palette' },
-                'TEATRO/DANZA': { icon: 'street-view' },
-                'TELEVISIONE': { icon: 'tv' }
+                'ICCA': { icon: 'street-view' },
+                'ELNE': { icon: 'tv' },
+                'PEO': { icon: 'tv' },
+                'CTCT': { icon: 'palette' },
 
             },
             fonti: {
@@ -111,7 +115,7 @@ $(function() {
             disableClusteringAtZoom: 14,
             clusterPaneZIndex: 620,
             maxClusterRadius: 100,
-            sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZ3vkQTK-CrT7Rv6Rdu3uDKmumQB94Ic7WrmBu4ezak-72QWbkUISb7FfvR_Z1AhmYgfASVad205BE/pub?output=csv'
+            sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZ3vkQTK-CrT7Rv6Rdu3uDKmumQB94Ic7WrmBu4ezak-72QWbkUISb7FfvR_Z1AhmYgfASVad205BE/pub?output=csv&bust=1'
         }
 
     };
@@ -677,7 +681,7 @@ $(function() {
         if (App.field_values.attivita[att]) {
             return App.field_values.attivita[att]['icon'];
         }
-        log('No icon for ' + row['ATTIVITA']);
+        log('No icon for ' + att);
         return 'question';
 
     }
